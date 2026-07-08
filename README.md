@@ -1,4 +1,4 @@
-# mManual Testing Project - E-commerce Application
+# Manual Testing Project - E-commerce Application
 
 ## About the project
 
