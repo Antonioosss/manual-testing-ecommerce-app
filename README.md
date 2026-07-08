@@ -95,5 +95,3 @@ Contains SQL queries used for data verification.
 ## Author
 
 Antoni Hawryło | Junior QA Tester portfolio project
-
-Manual testing project demonstraiting QA skills including test cases, bug reports, API testing and SQL validation.
