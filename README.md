@@ -8,7 +8,27 @@ The goal of the project is to simulate real QA activities performed during softw
 
 ---
 
-## Aplication under test
+## Repository Structure
+
+```text
+manual-testing-ecommerce-app
+│
+├── Test_Plan
+│   └── test_plan.md
+├── Test_Cases
+│   └── test_cases.xlsx
+├── Bug_Reports
+│   └── bug_reports.xlsx
+├── API
+├── SQL
+├── Test_Report
+│   └── final_report.md
+└── README.md
+```
+
+---
+
+## Application under test
 
 Application:
 SauceDemo
@@ -16,7 +36,7 @@ SauceDemo
 Type:
 E-commerce web application
 
-Test environtment;
+Test Environment:
 - Browser: Google Chrome
 - Operating System: Windows 11
 
@@ -24,7 +44,7 @@ Test environtment;
 
 ## Testing scope
 
-The following functionalities are covered:
+The following application features were tested:
 - User authentication
 - Product browsing
 - Product sorting
@@ -48,25 +68,14 @@ Performed tests:
 
 ## Documentation
 
-Project contains:
+The repository contains the following testing documentation:
 
-### Test Plan
-Defines testing objectives, scope, environment and strategy.
-
-### Test Cases
-Contains prapared test scenarios and expected results.
-
-### Bug Reports
-Contains documented defects with steps to reproduce.
-
-### Test Report
-Summarizes testing results and conclusions.
-
-### API Testing
-Contains basic API testing documentation.
-
-### SQL Validation
-Contains SQL queries used for data verification.
+- **Test Plan** – Defines testing objectives, scope, environment and strategy.
+- **Test Cases** – Manual test cases prepared in Microsoft Excel.
+- **Bug Reports** – Defects identified during exploratory testing.
+- **API Testing** – API test requests and validation.
+- **SQL Validation** – SQL queries demonstrating database testing knowledge.
+- **Final Test Report** – Summary of the executed testing process.
 
 ---
 
@@ -84,6 +93,7 @@ Contains SQL queries used for data verification.
 
 - Creating test documentation
 - Designing test cases
+- Writing clear bug reports
 - Reporting software defects
 - Performing functional testing
 - Understanding QA process
@@ -94,4 +104,4 @@ Contains SQL queries used for data verification.
 
 ## Author
 
-Antoni Hawryło | Junior QA Tester portfolio project
+Antoni Hawryło | Junior QA Portfolio project
