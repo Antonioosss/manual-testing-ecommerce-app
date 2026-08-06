@@ -1,0 +1,16 @@
+# Postman local workspace
+.postman/
+postman/
+
+# IDE
+.vscode/
+.idea/
+
+# Windows
+Thumbs.db
+
+# macOS
+.DS_Store
+
+# Logs
+*.log

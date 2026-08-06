@@ -1,0 +1,563 @@
+{
+  "info": {
+    "_postman_id": "20f91988-1dbd-4d49-a288-6a3fb8c37594",
+    "name": "JSONPlaceholder API Testing",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56739039",
+    "_collection_link": "https://go.postman.co/collection/56739039-20f91988-1dbd-4d49-a288-6a3fb8c37594?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Negative Tests",
+      "item": [
+        {
+          "name": "GET - Get non-existing post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "\r",
+                  "pm.test(\"Status code is 404\", function () {\r",
+                  "    pm.response.to.have.status(404);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response time below 1000 ms\", function () {\r",
+                  "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+                  "}) \r",
+                  "\r",
+                  "pm.test(\"Response body is an empty object\", function () {\r",
+                  "    pm.expect(response).to.deep.equal({});\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/posts/999999",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts",
+                "999999"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Create post with invalid payload",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const response = pm.response.json();\r",
+                  "const requestBody = JSON.parse(pm.request.body.raw);\r",
+                  "\r",
+                  "pm.test(\"Status code is 201\", function () {\r",
+                  "    pm.response.to.have.status(201);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Response contains returned fields\", function () {\r",
+                  "    pm.expect(response).to.have.property('title');\r",
+                  "    pm.expect(response).to.have.property('body');\r",
+                  "    pm.expect(response).to.have.property('userId');\r",
+                  "    pm.expect(response).to.have.property('id');\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Returned values match request payload\", function () {\r",
+                  "    pm.expect(response.title).to.equal(requestBody.title);\r",
+                  "    pm.expect(response.body).to.eql(requestBody.body);\r",
+                  "    pm.expect(response.userId).to.eql(requestBody.userId);\r",
+                  "});\r",
+                  "\r",
+                  "pm.test(\"Generated id is Integer\", function () {\r",
+                  "    pm.expect(Number.isInteger(response.id)).to.be.true;\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\": 123445,\r\n    \"body\": true,\r\n    \"userId\": \"abc\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "GET - Get Single Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "const expectedPostId = Number(\r",
+              "    pm.collectionVariables.get(\"postId\")\r",
+              ");\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response id matches postId variable\", function (){                \r",
+              "    pm.expect(response.id).to.equal(expectedPostId);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains a non-empty title\", function (){           \r",
+              "    pm.expect(response).to.have.property(\"title\");\r",
+              "    pm.expect(response.title).to.be.a(\"string\");\r",
+              "    pm.expect(response.title.trim()).to.not.be.empty;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is below 1000 ms\", function (){ \r",
+              "    const responseTime = pm.response.responseTime;\r",
+              "    pm.expect(responseTime).to.be.below(1000);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts/{{postId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "GET - Get All Posts",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "const responseLength = response.length;\r",
+              "const responseFirstElement = response[0];\r",
+              "\r",
+              "\r",
+              "pm.test(\"Received 100 posts\", function () {\r",
+              "    pm.expect(responseLength).to.equal(100);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response is an array\", function () {\r",
+              "    pm.expect(Array.isArray(response)).to.be.true;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"First element contains title field\", function () {\r",
+              "    pm.expect(responseFirstElement).to.have.property(\"title\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains: userId, id, title and body fields\", function () {\r",
+              "    response.forEach(post => {\r",
+              "        pm.expect(post).to.have.property(\"userId\");\r",
+              "        pm.expect(post).to.have.property(\"id\");\r",
+              "        pm.expect(post).to.have.property(\"title\");\r",
+              "        pm.expect(post).to.have.property(\"body\");\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Every post contains an integer id\", function () {\r",
+              "    response.forEach(post => {\r",
+              "        pm.expect(Number.isInteger(post.id)).to.be.true;\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Every userId is between 1 and 10\", function () {\r",
+              "    response.forEach(post => {\r",
+              "        pm.expect(post.userId).to.be.within(1, 10);\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Every title is not empty\", function () {\r",
+              "    response.forEach(post => {\r",
+              "        pm.expect(post.title).to.not.be.empty;\r",
+              "    });\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Every post has a unique id\", function () {\r",
+              "    const ids = response.map(post => post.id);\r",
+              "    const uniqueIds = new Set(ids);\r",
+              "\r",
+              "    pm.expect(uniqueIds.size).to.equal(ids.length);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "POST - Create New Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "\r",
+              "pm.test(\"Status code is 201\", function () {\r",
+              "    pm.response.to.have.status(201);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains required fields\", function () {\r",
+              "    pm.expect(response).to.have.property(\"title\");\r",
+              "    pm.expect(response).to.have.property(\"body\");\r",
+              "    pm.expect(response).to.have.property(\"userId\");\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Returned title matches sent title\", function () {\r",
+              "    pm.expect(response.title).to.eql(\"QA API test\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Returned userId matches sent userId\", function () {\r",
+              "    pm.expect(response.userId).to.equal(requestBody.userId);\r",
+              "})\r",
+              "\r",
+              "pm.test(\"Returned id is an Integer\", function () {\r",
+              "    pm.expect(Number.isInteger(response.id)).to.be.true;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is below 1000 ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "});\r",
+              "\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"QA API test\",\r\n    \"body\": \"Post created from Postman\",\r\n    \"userId\": 1\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PUT - Update Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is below 1000 ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains required fields\", function () {\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "    pm.expect(response).to.have.property(\"title\");\r",
+              "    pm.expect(response).to.have.property(\"body\");\r",
+              "    pm.expect(response).to.have.property(\"userId\")\r",
+              "});\r",
+              "\r",
+              "pm.test(\"id is an Integer\", function () {\r",
+              "    pm.expect(Number.isInteger(response.id)).to.be.true;\r",
+              "});\r",
+              "\r",
+              "pm.test(\"userId is an Integer and within expected range\", function () {\r",
+              "    pm.expect(Number.isInteger(response.userId)).to.be.true;\r",
+              "    pm.expect(response.userId).to.be.within(1, 10);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"title is String and not empty\", function () {\r",
+              "    pm.expect(typeof response.title).to.equal(\"string\");\r",
+              "    pm.expect(response.title.trim().length).to.be.greaterThan(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"body is a String and not empty\", function () {\r",
+              "    pm.expect(typeof response.body).to.equal(\"string\");\r",
+              "    pm.expect(response.body.trim().length).to.be.greaterThan(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response values match request payload\", function () {\r",
+              "    pm.expect(response.id).to.equal(1);\r",
+              "    pm.expect(response.title).to.equal(requestBody.title);\r",
+              "    pm.expect(response.body).to.equal(requestBody.body);\r",
+              "    pm.expect(response.userId).to.equal(requestBody.userId);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"id\": 1,\r\n    \"title\": \"Updated title\",\r\n    \"body\": \"Updated body\",\r\n    \"userId\": 5\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts/{{postId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "PATCH - Partially Update Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is below 1000 ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response contains required fields\", function () {\r",
+              "    pm.expect(response).to.have.property(\"userId\");\r",
+              "    pm.expect(response).to.have.property(\"id\");\r",
+              "    pm.expect(response).to.have.property(\"title\");\r",
+              "    pm.expect(response).to.have.property(\"body\");\r",
+              "});\r",
+              "\r",
+              "pm.test(\"title is a String and not empty\", function () {\r",
+              "    pm.expect(typeof response.title).to.equal(\"string\");\r",
+              "    pm.expect(response.title.trim().length).to.be.greaterThan(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"body is a String and not empty\", function () {\r",
+              "    pm.expect(typeof response.body).to.equal(\"string\");\r",
+              "    pm.expect(response.body.trim().length).to.be.greaterThan(0);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"userId is an Integer and within expected range\", function () {\r",
+              "    pm.expect(Number.isInteger(response.userId)).to.be.true;\r",
+              "    pm.expect(response.userId).to.be.within(1, 10);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Updated field matches request payload\", function () {\r",
+              "    pm.expect(response.title).to.equal(requestBody.title);\r",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Partially updated title\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{baseUrl}}/posts/{{postId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "DELETE - Delete Post",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const response = pm.response.json();\r",
+              "\r",
+              "pm.test(\"Status code is 200\", function () {\r",
+              "    pm.response.to.have.status(200);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response time is below 1000 ms\", function () {\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+              "});\r",
+              "\r",
+              "pm.test(\"Response body is an empty object\", function () {\r",
+              "    pm.expect(response).to.deep.equal({});\r",
+              "});\r",
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        },
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              ""
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/posts/{{postId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "posts",
+            "{{postId}}"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "postId",
+      "value": "1"
+    }
+  ]
+}
