@@ -282,7 +282,7 @@
               "});\r",
               "\r",
               "pm.test(\"Response time is below 1000 ms\", function () {\r",
-              "    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+              "    pm.expect(pm.response.responseTime).to.be.below(1000);\r",
               "});\r",
               "\r",
               ""
@@ -326,6 +326,7 @@
             "exec": [
               "const response = pm.response.json();\r",
               "const requestBody = JSON.parse(pm.request.body.raw);\r",
+              "const postId = Number(pm.collectionVariables.get(\"postId\"));\r",
               "\r",
               "pm.test(\"Status code is 200\", function () {\r",
               "    pm.response.to.have.status(200);\r",
@@ -362,7 +363,7 @@
               "});\r",
               "\r",
               "pm.test(\"Response values match request payload\", function () {\r",
-              "    pm.expect(response.id).to.equal(1);\r",
+              "    pm.expect(response.id).to.equal(postId);\r",
               "    pm.expect(response.title).to.equal(requestBody.title);\r",
               "    pm.expect(response.body).to.equal(requestBody.body);\r",
               "    pm.expect(response.userId).to.equal(requestBody.userId);\r",

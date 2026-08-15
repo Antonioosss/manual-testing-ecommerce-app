@@ -55,7 +55,9 @@ This collection uses Postman variables to make requests easier to maintain and r
 
 Example:
 
-```text {{baseUrl}} = https://jsonplaceholder.typicode.com ```
+```text
+{{baseUrl}} = https://jsonplaceholder.typicode.com 
+```
 
 ### Collection Variables
 
@@ -111,7 +113,7 @@ Some behaviors differ from real production APIs:
 
 - Invalid request payloads are accepted instead of returning validation errors.
 - POST, PUT, PATCH and DELETE requests do not permanently modify server data.
-- Negeative scenarios are limited by the API implementations.
+- Negative scenarios are limited by the API implementations.
 
 ## Newman CLI Execution
 
@@ -129,8 +131,8 @@ The final run completed successfully:
 ```text
 API
 ├── collection_runner_results.png
-├── JSONPlaceholder_API_Testing.postman_collection
-├── JSONPlaceholder_Environment.postman_environment
+├── JSONPlaceholder_API_Testing.postman_collection.json
+├── JSONPlaceholder_Environment.postman_environment.json
 └── README.md
 ```
 
