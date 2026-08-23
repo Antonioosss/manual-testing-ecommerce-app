@@ -17,3 +17,7 @@ Thumbs.db
 
 # Microsoft Office temporary files
 ~$*
+
+# SQLite / DB Browser
+*.db-journal
+*.sqbpro
