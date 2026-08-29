@@ -8,9 +8,9 @@ The main goal of testing is to verify that the key user flows work correctly, in
 
 ## 2. Application Under Test
 
-**Application name:** SauceDemo
-**Application type:** E-commerce web application
-**URL:** https://www.saucedemo.com/
+- Application name: SauceDemo
+- Application type: E-commerce web application
+- URL: https://www.saucedemo.com/
 
 ## 3. Test Objectives
 
@@ -42,32 +42,31 @@ The following areas are not included in this project:
 
 * Performance testing
 * Security testing
-* Payment gateway testing
-* Mobile application testing
+* Mobile/responsive testing
 * Backend/database testing of the SauceDemo application
 
 ## 6. Test Environment
 
-**Operating system:** Windows 11
-**Browser:** Google Chrome
+- Operating System: Windows 11
+- Browser: Google Chrome
 
-**Test Data:**
+### Test Data
 
-**Username:**
-standard_user
+Primary test account:
 
-**Password:**
-secret_sauce
+- Username: `standard_user`
+- Password: `secret_sauce`
+
+Alternative SauceDemo test accounts may be used during exploratory testing.
 
 ## 7. Test Types
 
 The following test types will be performed:
 
 * Functional testing
-* Smoke testing
-* Regression testing
 * UI testing
 * Negative testing
+* Exploratory testing
 
 ## 8. Entry Criteria
 
@@ -93,50 +92,4 @@ Potential risks:
 
 * The application may change during testing
 * Some features may work differently than expected due to missing formal requirements
-* Quantity selection is not available in the cart, but this may be an intended limitation
 
-## 11. Tested Functionalities
-
-### Login
-
-Observed validation messages:
-
-* Epic sadface: Username is required
-* Epic sadface: Password is required
-* Epic sadface: Username and password do not match any user in this service
-
-### Products
-
-Observed functionalities:
-
-* Product list is displayed after successful login
-* User can open product details by clicking the product image or product name
-* User can sort products by name
-* User can sort products by price
-* User can add products to the cart
-
-### Cart
-
-Observed functionalities:
-
-* User can remove products from the cart
-* Cart counter updates after adding products
-* User can proceed to checkout from the cart
-* Buying more than one unit of the same product is not available
-
-### Checkout
-
-Observed functionalities:
-
-* User can enter customer data
-* User can continue to the order overview
-* User can complete an order
-* Order completion confirmation is displayed
-
-Additional observations:
-
-* The First Name field accepts a single-character value.
-* The Last Name field accepts a single-character value.
-* The Zip/Postal Code field accepts a single-character value.
-
-These fields do not enforce a minimum input length. Whether this behavior should be considered a defect depends on the business requirements.
