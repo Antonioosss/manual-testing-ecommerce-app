@@ -1,4 +1,4 @@
-# JSONPlaceholder API Testig
+# JSONPlaceholder API Testing
 
 ## Project Overview
 
@@ -101,6 +101,8 @@ Final collection summary:
 - Failed assertions: **0**
 - Collection Runner: **43 / 43 assertions passed**
 
+The collection was successfully executed both in Postman Collection Runner and from the command line using Newman.
+
 ### Collection Runner
 
 ![Postman Collection Runner Results](collection_runner_results.png)
@@ -113,18 +115,7 @@ Some behaviors differ from real production APIs:
 
 - Invalid request payloads are accepted instead of returning validation errors.
 - POST, PUT, PATCH and DELETE requests do not permanently modify server data.
-- Negative scenarios are limited by the API implementations.
-
-## Newman CLI Execution
-
-The Postman collection was also executed from the command line using Newman.
-
-The final run completed successfully:
-
-- 8 requests executed
-- 43 assertions executed
-- 0 failed requests
-- 0 failed assertions
+- Negative testing scenarios are limited by the behavior of the API.
 
 ## Repository Structure
 
