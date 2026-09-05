@@ -92,6 +92,28 @@ The identified defects affected areas such as:
 
 Detailed defect descriptions, reproduction steps, expected and actual results, severity and priority are available in the `Bug_Reports` directory.
 
+## Jira Bug Tracking
+
+The five defects documented in `Bug_Reports/bug_reports.xlsx`
+were also recorded in Jira. Each Jira issue references its
+original BUG ID to maintain traceability between both tools.
+
+The reports include reproduction steps, expected and actual
+results, environment details, priority, severity, and supporting
+screenshots or videos.
+
+A separate documentation review task was used to practice
+assignment, comments, and workflow transitions. The five defects
+remain open; completing the review task does not indicate fixes.
+
+### Jira Board
+
+![Jira board](Jira/jira-board.png)
+
+### Example Bug Report
+
+![Example bug report](Jira/jira-bug-example.png)
+
 ## API Testing
 
 API testing was performed separately using the JSONPlaceholder REST API.
@@ -180,6 +202,10 @@ manual-testing-ecommerce-app/
 ├── Test_Report/
 │   └── final_report.md
 │
+├── Jira/
+│   └── jira-board.png
+│   └── jira-bug-example.png
+│
 ├── .gitignore
 └── README.md
 ```
@@ -205,6 +231,7 @@ The repository contains:
 - DB Browser for SQLite
 - Git
 - GitHub
+- Jira
 
 ## Skills Demonstrated
 
@@ -223,6 +250,7 @@ The repository contains:
 - Relational database queries
 - Git and GitHub workflow
 - QA documentation
+- Jira issue tracking and workflow management
 
 ## Author
 
